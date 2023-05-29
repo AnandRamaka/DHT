@@ -1,14 +1,33 @@
-Setup
-Linux
-GOROOT=/usr/lib/go
-GOPATH=/usr/aryanj/go
-MAC export GOROOT=/usr/local/go
-export GOPATH=/Users/aryanjoshi/go
-Common
+**Setup**
+
+**Linux**
+
+_GOROOT=/usr/lib/go_
+
+_GOPATH=/usr/aryanj/go_
+
+
+
+**Mac**
+
+_export GOROOT=/usr/local/go_
+
+_export GOPATH=/Users/aryanjoshi/go_
+
+
+
+**Common**
+
 all code should go under GOPATH/src
+
 clone repo
-go mod init bookshop/server
-protoc --proto_path=proto proto/*.proto --go_out=. --go-grpc_out=.
-from server folder run
-go install bookshop/server
+
+_go mod init bookshop/server
+
+protoc --proto_path=proto proto/*.proto --go_out=. --go-grpc_out=._
+
+from server folder run:
+
+_go install bookshop/server_
+
 the server is ready to start
