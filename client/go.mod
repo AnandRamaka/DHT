@@ -1,4 +1,4 @@
-module bookshop/client
+module dht/client
 
 go 1.17
 

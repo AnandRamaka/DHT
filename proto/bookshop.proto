@@ -15,3 +15,5 @@ message GetBookListResponse { repeated Book books = 1; }
 service Inventory {
   rpc GetBookList(GetBookListRequest) returns (GetBookListResponse) {}
 }
+
+

@@ -1,4 +1,4 @@
-module bookshop/server
+module dht/server
 
 go 1.17
 
