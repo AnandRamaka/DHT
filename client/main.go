@@ -15,10 +15,10 @@ func main() {
 	}
 	defer conn.Close()
 
-	client := pb.NewInventoryClient(conn)
-	bookList, err := client.GetBookList(context.Background(), &pb.GetBookListRequest{})
+	client := pb.NewHashTableClient(conn)
+	bookList, err := client.GetValue(context.Background(), &pb.UrlRequest{} )
 	if err != nil {
 		log.Fatalf("failed to get book list: %v", err)
 	}
-	log.Printf("book list: %v", bookList)
+	log.Printf("Test value: %v", bookList)
 }
