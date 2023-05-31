@@ -23,26 +23,30 @@ option go_package = "pb/inventory";
 service HashTable {
   rpc GetURL(UrlRequest) returns (UrlResponse) {}
   rpc GetValue(UrlRequest) returns (ValueResponse) {}
-  rpc InsertKv(InsertValue) returns (UrlResponse) {}
+  rpc InsertValue(InsertRequest) returns (Status) {}
 }
 
 // Get 
 message UrlRequest {
-  int32 key = 1;
+  string Key = 1;
 }
 
 // Get URL
 message UrlResponse {
-  string url = 1;
+  string Url = 1;
 }
 
 // 
 message ValueResponse {
- string value = 1; 
+ string Value = 1; 
 }
 
 // Insert kv
-message InsertValue {
-  int32 key = 1;
-  string value = 2; 
+message InsertRequest {
+  string Key = 1;
+  string Value = 2; 
+}
+
+message Status {
+  string Result = 1;
 }

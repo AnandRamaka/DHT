@@ -19,9 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	HashTable_GetURL_FullMethodName   = "/HashTable/GetURL"
-	HashTable_GetValue_FullMethodName = "/HashTable/GetValue"
-	HashTable_InsertKv_FullMethodName = "/HashTable/InsertKv"
+	HashTable_GetURL_FullMethodName      = "/HashTable/GetURL"
+	HashTable_GetValue_FullMethodName    = "/HashTable/GetValue"
+	HashTable_InsertValue_FullMethodName = "/HashTable/InsertValue"
 )
 
 // HashTableClient is the client API for HashTable service.
@@ -30,7 +30,7 @@ const (
 type HashTableClient interface {
 	GetURL(ctx context.Context, in *UrlRequest, opts ...grpc.CallOption) (*UrlResponse, error)
 	GetValue(ctx context.Context, in *UrlRequest, opts ...grpc.CallOption) (*ValueResponse, error)
-	InsertKv(ctx context.Context, in *InsertValue, opts ...grpc.CallOption) (*UrlResponse, error)
+	InsertValue(ctx context.Context, in *InsertRequest, opts ...grpc.CallOption) (*Status, error)
 }
 
 type hashTableClient struct {
@@ -59,9 +59,9 @@ func (c *hashTableClient) GetValue(ctx context.Context, in *UrlRequest, opts ...
 	return out, nil
 }
 
-func (c *hashTableClient) InsertKv(ctx context.Context, in *InsertValue, opts ...grpc.CallOption) (*UrlResponse, error) {
-	out := new(UrlResponse)
-	err := c.cc.Invoke(ctx, HashTable_InsertKv_FullMethodName, in, out, opts...)
+func (c *hashTableClient) InsertValue(ctx context.Context, in *InsertRequest, opts ...grpc.CallOption) (*Status, error) {
+	out := new(Status)
+	err := c.cc.Invoke(ctx, HashTable_InsertValue_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -74,7 +74,7 @@ func (c *hashTableClient) InsertKv(ctx context.Context, in *InsertValue, opts ..
 type HashTableServer interface {
 	GetURL(context.Context, *UrlRequest) (*UrlResponse, error)
 	GetValue(context.Context, *UrlRequest) (*ValueResponse, error)
-	InsertKv(context.Context, *InsertValue) (*UrlResponse, error)
+	InsertValue(context.Context, *InsertRequest) (*Status, error)
 	mustEmbedUnimplementedHashTableServer()
 }
 
@@ -88,8 +88,8 @@ func (UnimplementedHashTableServer) GetURL(context.Context, *UrlRequest) (*UrlRe
 func (UnimplementedHashTableServer) GetValue(context.Context, *UrlRequest) (*ValueResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetValue not implemented")
 }
-func (UnimplementedHashTableServer) InsertKv(context.Context, *InsertValue) (*UrlResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method InsertKv not implemented")
+func (UnimplementedHashTableServer) InsertValue(context.Context, *InsertRequest) (*Status, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InsertValue not implemented")
 }
 func (UnimplementedHashTableServer) mustEmbedUnimplementedHashTableServer() {}
 
@@ -140,20 +140,20 @@ func _HashTable_GetValue_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
-func _HashTable_InsertKv_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(InsertValue)
+func _HashTable_InsertValue_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InsertRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(HashTableServer).InsertKv(ctx, in)
+		return srv.(HashTableServer).InsertValue(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: HashTable_InsertKv_FullMethodName,
+		FullMethod: HashTable_InsertValue_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(HashTableServer).InsertKv(ctx, req.(*InsertValue))
+		return srv.(HashTableServer).InsertValue(ctx, req.(*InsertRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -174,8 +174,8 @@ var HashTable_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _HashTable_GetValue_Handler,
 		},
 		{
-			MethodName: "InsertKv",
-			Handler:    _HashTable_InsertKv_Handler,
+			MethodName: "InsertValue",
+			Handler:    _HashTable_InsertValue_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
