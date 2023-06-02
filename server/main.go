@@ -5,7 +5,7 @@ import (
 	"context"
 	"log"
 	"net"
-
+	"os"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
@@ -33,10 +33,13 @@ func (s *server) GetValue(ctx context.Context, in *pb.UrlRequest) (*pb.ValueResp
 }
 
 func main() {
+	args := os.Args
 	listener, err := net.Listen("tcp", ":8080")
 	if err != nil {
 		panic(err)
 	}
+
+	//args[1]
 
 	s := grpc.NewServer()
 	
