@@ -6,9 +6,17 @@ import (
 	"log"
 	"net"
 	"os"
+	"fmt"
+	"hash/fnv"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
+
+func hash(s string) uint32 {
+	h := fnv.New32a()
+	h.Write([]byte(s))
+	return h.Sum32()
+}
 
 type server struct {
 	pb.UnimplementedHashTableServer
@@ -34,12 +42,13 @@ func (s *server) GetValue(ctx context.Context, in *pb.UrlRequest) (*pb.ValueResp
 
 func main() {
 	args := os.Args
-	listener, err := net.Listen("tcp", ":8080")
+	listener, err := net.Listen("tcp", args[1])
 	if err != nil {
 		panic(err)
 	}
 
-	//args[1]
+	successor := args[2]
+	fmt.Printf("Server started at: " + args[1] + "  has a successor at: " + successor)
 
 	s := grpc.NewServer()
 	

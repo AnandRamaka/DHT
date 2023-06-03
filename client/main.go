@@ -8,6 +8,7 @@ import (
 	"log"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
+	"bufio"
 )
 
 // var client_global := pb.NewHashTableClient(conn)
@@ -43,6 +44,20 @@ func getRequest(cl pb.HashTableClient,  key string) {
 }
 
 func main() {
+	ports_file := "../ports.txt"
+	content, err := ioutil.ReadFile(ports_file)
+	
+	if err != nil {
+		fmt.Println("Error reading file:", err)
+		return
+	}
+
+	lines := strings.Split(string(content), "\n")
+	var portList []string
+	for _, line := range lines {
+		portList = append(portList, line)
+	}
+
 	conn, err := grpc.Dial("localhost:8080", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatalf("failed to connect: %v", err)
@@ -54,7 +69,6 @@ func main() {
 	log.Println("Context Background:", context.Background())	
 	
 	insertRequest(client, "2234567890", "test" )
-
 	getRequest(client, "2234567890") 
 }
 
