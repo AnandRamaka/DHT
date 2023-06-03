@@ -37,10 +37,12 @@ func getRequest(cl pb.HashTableClient,  key string) {
 
 	response, err := cl.GetValue(context.Background(), request )
 
-	fmt.Println( response )
-
 	if err != nil {
 		log.Fatalf("failed to request: %v", err)
+		fmt.Println("getRequest failed")
+	} else {
+		fmt.Println(response)
+		fmt.Println(err)
 	}
 }
 
@@ -69,8 +71,9 @@ func main() {
 
 	log.Println("Context Background:", context.Background())	
 	
-	insertRequest(client, "2234567890", "test" )
-	getRequest(client, "2234567890") 
+	// insertRequest(client, "2234567890", "test" )
+	// getRequest(client, "2234567890") 
+	getRequest(client, "8")
 }
 
 

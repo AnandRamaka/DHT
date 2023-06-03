@@ -11,6 +11,8 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 	"time"
+	"strconv"
+	"google.golang.org/grpc/status"
 )
 
 func hash(s string) uint32 {
@@ -24,12 +26,13 @@ type server struct {
 }
 
 var HM = make(map[string]string)
-
+var serverIds [3]int
+var ports [3]string
 func (s *server) InsertValue(ctx context.Context, in *pb.InsertRequest) (*pb.Status, error) {
 	HM[in.Key] = in.Value
 
 
-	fmt.PrintLn(hashes[0])
+	fmt.Println(serverIds[0])
 
 	return &pb.Status{
 		Result: "Success",
@@ -38,19 +41,32 @@ func (s *server) InsertValue(ctx context.Context, in *pb.InsertRequest) (*pb.Sta
 
 func (s *server) GetValue(ctx context.Context, in *pb.UrlRequest) (*pb.ValueResponse, error) {
 	log.Printf("Received request: %v", in.ProtoReflect().Descriptor().FullName())
-
-	return &pb.ValueResponse{
-				Value: HM[in.Key],
-			}, nil
+	val, ok := HM[in.Key]
+	// If the key exists
+	fmt.Println("Got Request for key" + in.Key)
+	if ok {
+		// Do something
+		return &pb.ValueResponse{
+			Value: val,
+		}, nil
+	}
+	return &pb.ValueResponse{}, status.Error(400,"Key not found")
+}
+// func (s *server) GetURL(ctx context.Context, in *pb.UrlRequest) (*pb.UrlResponse, error) {
+	
+// }
+func first(n int, _ error) int {
+    return n
 }
 
 func main() {
 	args := os.Args
 
-	hashes := []int{args[0], args[2], args[4]}
-	ports := []int{args[1], args[3], args[5]} 
-
-	listener, err := net.Listen("tcp", ports[1])
+	serverIds = [3]int{first(strconv.Atoi(args[1])), first(strconv.Atoi(args[3])), first(strconv.Atoi(args[5]))}
+	ports = [3]string{args[2], args[4], args[6]} 
+	fmt.Println(serverIds)
+	fmt.Println(ports)
+	listener, err := net.Listen("tcp", "localhost:" + ports[1])
 	if err != nil {
 		panic(err)
 	}

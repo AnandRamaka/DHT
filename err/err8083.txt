@@ -1,3 +1,0 @@
-server\main.go:4:2: package dht/server/pb/inventory is not in GOROOT (C:\Program Files\Go\src\dht\server\pb\inventory)
-server\main.go:11:2: no required module provides package google.golang.org/grpc: go.mod file not found in current directory or any parent directory; see 'go help modules'
-server\main.go:12:2: no required module provides package google.golang.org/grpc/reflection: go.mod file not found in current directory or any parent directory; see 'go help modules'

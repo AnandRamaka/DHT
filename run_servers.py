@@ -22,7 +22,7 @@ port_keys.sort()
 
 print(port_keys)
 
-with open('pids.txt', 'w') as pid_file, \
+with open('pids.txt', 'a') as pid_file, \
      open('ports.txt', 'w') as port_file, \
      open('serverIds.txt', 'w') as sid_file:
     pid_file.write(str(os.getpid()) + '\n')  

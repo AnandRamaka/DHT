@@ -10,6 +10,7 @@
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
+*.txt
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
@@ -17,3 +18,8 @@
 # Temporary files
 tmp/
 bin/
+out/
+err/
+ports.txt
+pids.txt
+serverIds.txt
