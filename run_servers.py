@@ -19,12 +19,16 @@ for i in range(NUMSERVERS):
     errfiles.append(open(f"err/err{port_keys[i][1]}.txt", "w"))
 port_keys.sort()
 
+
+print(port_keys)
+
 with open('pids.txt', 'w') as pid_file, \
      open('ports.txt', 'w') as port_file, \
      open('serverIds.txt', 'w') as sid_file:
     pid_file.write(str(os.getpid()) + '\n')  
     for i in range(NUMSERVERS):
-        cmd_args = [f"{port_keys[(i+j)%NUMSERVERS][0], port_keys[(i+j)%NUMSERVERS][1]}" for j in range(-1,2)]
+
+        cmd_args = " ".join(f"{port_keys[(i+j)%NUMSERVERS][0]} {port_keys[(i+j)%NUMSERVERS][1]}" for j in range(-1,2))
         sub = subprocess.Popen(f"go run server/main.go {cmd_args}", shell=True, stdout=outfiles[i], stderr=errfiles[i])
         pid_file.write(str(sub.pid) + '\n')
         port_file.write(str(port_keys[i][1]) + '\n')

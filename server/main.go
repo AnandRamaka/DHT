@@ -42,11 +42,15 @@ func (s *server) GetValue(ctx context.Context, in *pb.UrlRequest) (*pb.ValueResp
 
 func main() {
 	args := os.Args
-	listener, err := net.Listen("tcp", args[1])
+
+	hashes := []int{args[0], args[2], args[4]}
+	ports := []int{args[1], args[3], args[5]} 
+
+	listener, err := net.Listen("tcp", ports[1])
 	if err != nil {
 		panic(err)
 	}
-
+	
 	successor := args[2]
 	fmt.Printf("Server started at: " + args[1] + "  has a successor at: " + successor)
 
