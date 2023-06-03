@@ -1,6 +1,0 @@
-panic: listen tcp: address 8082: missing port in address
-
-goroutine 1 [running]:
-main.main()
-	/Users/aryanjoshi/go/src/dht/server/main.go:40 +0x19d
-exit status 2

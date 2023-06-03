@@ -10,6 +10,7 @@ import (
 	"hash/fnv"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
+	"time"
 )
 
 func hash(s string) uint32 {
@@ -26,6 +27,9 @@ var HM = make(map[string]string)
 
 func (s *server) InsertValue(ctx context.Context, in *pb.InsertRequest) (*pb.Status, error) {
 	HM[in.Key] = in.Value
+
+
+	fmt.PrintLn(hashes[0])
 
 	return &pb.Status{
 		Result: "Success",
@@ -51,6 +55,9 @@ func main() {
 		panic(err)
 	}
 	
+	//Waiting for other servers to start up 
+	time.Sleep(5 * time.Second)
+
 	successor := args[2]
 	fmt.Printf("Server started at: " + args[1] + "  has a successor at: " + successor)
 

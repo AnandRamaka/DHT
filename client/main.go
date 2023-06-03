@@ -8,7 +8,8 @@ import (
 	"log"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
-	"bufio"
+	"io/ioutil"
+	"strings"
 )
 
 // var client_global := pb.NewHashTableClient(conn)
@@ -58,7 +59,7 @@ func main() {
 		portList = append(portList, line)
 	}
 
-	conn, err := grpc.Dial("localhost:8080", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.Dial("localhost:8082", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatalf("failed to connect: %v", err)
 	}
