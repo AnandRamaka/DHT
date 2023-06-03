@@ -8,4 +8,5 @@ with open('pids.txt', 'r') as pid_file:
             counter+=1
         except:
             continue
+open('pids.txt', 'w').close()
 print(f"killed {counter} processes")
