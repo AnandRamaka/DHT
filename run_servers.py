@@ -2,6 +2,7 @@ import os
 import subprocess
 import sys
 import random
+import platform
 
 
 print( "Current PID:", os.getpid() )
@@ -48,11 +49,19 @@ while True:
     if cmd == "kill":
         break
 
+
+system = platform.system()
 print("\n", "-"*50, "\n")
 print("Initiate kill sequence ...\n")
-for i in range(len(programs)):
-    programs[i].kill()
-    print(f"killing: {programs[i].pid}")
+
+if system == 'Darwin':
+    os.system("pkill -f go")
+else:
+    os.system("taskkill /F /IM go.exe")
+
+# for i in range(len(programs)):
+#     programs[i].kill()
+#     print(f"killing: {programs[i].pid}")
 
 
 
