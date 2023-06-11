@@ -3,7 +3,7 @@ import subprocess
 import sys
 import random
 import platform
-
+import glob
 
 print( "Current PID:", os.getpid() )
 programs = []
@@ -14,12 +14,23 @@ MODCONS = 10000
 starting_port = 8081
 ports = []
 port_keys = []
-for i in range(NUMSERVERS):
-    port_keys.append((random.randint(1,10000), starting_port+i))
-    outfiles.append(open(f"out/out{port_keys[i][1]}.txt", "w"))
-    errfiles.append(open(f"err/err{port_keys[i][1]}.txt", "w"))
-port_keys.sort()
 
+def clean_folder(path):
+    files = glob.glob(f"{path}/*")
+    for f in files:
+        os.remove(f)
+def open_files():
+    for i in range(NUMSERVERS):
+        port_keys.append((random.randint(1,10000), starting_port+i))
+        outfiles.append(open(f"out/out{port_keys[i][1]}.txt", "w"))
+        errfiles.append(open(f"err/err{port_keys[i][1]}.txt", "w"))
+
+
+clean_folder("out")
+clean_folder("err")
+open_files()
+
+port_keys.sort()
 
 print(port_keys)
 
@@ -56,8 +67,10 @@ print("Initiate kill sequence ...\n")
 
 if system == 'Darwin':
     os.system("pkill -f go")
+    print("killed")
 else:
     os.system("taskkill /F /IM go.exe")
+    print("killed")
 
 # for i in range(len(programs)):
 #     programs[i].kill()

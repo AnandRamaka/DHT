@@ -24,11 +24,22 @@ service HashTable {
   rpc GetURL(UrlRequest) returns (UrlResponse) {}
   rpc GetValue(UrlRequest) returns (ValueResponse) {}
   rpc InsertValue(InsertRequest) returns (Status) {}
+  rpc GetPredecessor(EmptyRequest) returns (NodeResponse) {}
+  rpc ChangeNeighbor(NeighborUpdate) returns (EmptyResponse) {}
+  rpc RedistributeKeys(NeighborUpdate) returns (EmptyResponse) {}
 }
-
 // Get 
+
+message EmptyRequest {}
+message EmptyResponse {}
+
 message UrlRequest {
   string Key = 1;
+}
+
+message NodeResponse {
+  string Url = 1;
+  int32 Id = 2;
 }
 
 // Get URL
@@ -49,4 +60,10 @@ message InsertRequest {
 
 message Status {
   string Result = 1;
+}
+
+message NeighborUpdate {
+  string Ports = 1;
+  int32 Id = 2;
+  bool IsSuccessor = 3;
 }

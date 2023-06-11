@@ -20,7 +20,82 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// Get
+type EmptyRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *EmptyRequest) Reset() {
+	*x = EmptyRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_bookshop_proto_msgTypes[0]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *EmptyRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EmptyRequest) ProtoMessage() {}
+
+func (x *EmptyRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_bookshop_proto_msgTypes[0]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EmptyRequest.ProtoReflect.Descriptor instead.
+func (*EmptyRequest) Descriptor() ([]byte, []int) {
+	return file_bookshop_proto_rawDescGZIP(), []int{0}
+}
+
+type EmptyResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *EmptyResponse) Reset() {
+	*x = EmptyResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_bookshop_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *EmptyResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EmptyResponse) ProtoMessage() {}
+
+func (x *EmptyResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_bookshop_proto_msgTypes[1]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EmptyResponse.ProtoReflect.Descriptor instead.
+func (*EmptyResponse) Descriptor() ([]byte, []int) {
+	return file_bookshop_proto_rawDescGZIP(), []int{1}
+}
+
 type UrlRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -32,7 +107,7 @@ type UrlRequest struct {
 func (x *UrlRequest) Reset() {
 	*x = UrlRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_bookshop_proto_msgTypes[0]
+		mi := &file_bookshop_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -45,7 +120,7 @@ func (x *UrlRequest) String() string {
 func (*UrlRequest) ProtoMessage() {}
 
 func (x *UrlRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_bookshop_proto_msgTypes[0]
+	mi := &file_bookshop_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -58,7 +133,7 @@ func (x *UrlRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UrlRequest.ProtoReflect.Descriptor instead.
 func (*UrlRequest) Descriptor() ([]byte, []int) {
-	return file_bookshop_proto_rawDescGZIP(), []int{0}
+	return file_bookshop_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *UrlRequest) GetKey() string {
@@ -66,6 +141,61 @@ func (x *UrlRequest) GetKey() string {
 		return x.Key
 	}
 	return ""
+}
+
+type NodeResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Url string `protobuf:"bytes,1,opt,name=Url,proto3" json:"Url,omitempty"`
+	Id  int32  `protobuf:"varint,2,opt,name=Id,proto3" json:"Id,omitempty"`
+}
+
+func (x *NodeResponse) Reset() {
+	*x = NodeResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_bookshop_proto_msgTypes[3]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *NodeResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*NodeResponse) ProtoMessage() {}
+
+func (x *NodeResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_bookshop_proto_msgTypes[3]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use NodeResponse.ProtoReflect.Descriptor instead.
+func (*NodeResponse) Descriptor() ([]byte, []int) {
+	return file_bookshop_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *NodeResponse) GetUrl() string {
+	if x != nil {
+		return x.Url
+	}
+	return ""
+}
+
+func (x *NodeResponse) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
 }
 
 // Get URL
@@ -80,7 +210,7 @@ type UrlResponse struct {
 func (x *UrlResponse) Reset() {
 	*x = UrlResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_bookshop_proto_msgTypes[1]
+		mi := &file_bookshop_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -93,7 +223,7 @@ func (x *UrlResponse) String() string {
 func (*UrlResponse) ProtoMessage() {}
 
 func (x *UrlResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_bookshop_proto_msgTypes[1]
+	mi := &file_bookshop_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -106,7 +236,7 @@ func (x *UrlResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UrlResponse.ProtoReflect.Descriptor instead.
 func (*UrlResponse) Descriptor() ([]byte, []int) {
-	return file_bookshop_proto_rawDescGZIP(), []int{1}
+	return file_bookshop_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *UrlResponse) GetUrl() string {
@@ -128,7 +258,7 @@ type ValueResponse struct {
 func (x *ValueResponse) Reset() {
 	*x = ValueResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_bookshop_proto_msgTypes[2]
+		mi := &file_bookshop_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -141,7 +271,7 @@ func (x *ValueResponse) String() string {
 func (*ValueResponse) ProtoMessage() {}
 
 func (x *ValueResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_bookshop_proto_msgTypes[2]
+	mi := &file_bookshop_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -154,7 +284,7 @@ func (x *ValueResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ValueResponse.ProtoReflect.Descriptor instead.
 func (*ValueResponse) Descriptor() ([]byte, []int) {
-	return file_bookshop_proto_rawDescGZIP(), []int{2}
+	return file_bookshop_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *ValueResponse) GetValue() string {
@@ -177,7 +307,7 @@ type InsertRequest struct {
 func (x *InsertRequest) Reset() {
 	*x = InsertRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_bookshop_proto_msgTypes[3]
+		mi := &file_bookshop_proto_msgTypes[6]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -190,7 +320,7 @@ func (x *InsertRequest) String() string {
 func (*InsertRequest) ProtoMessage() {}
 
 func (x *InsertRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_bookshop_proto_msgTypes[3]
+	mi := &file_bookshop_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -203,7 +333,7 @@ func (x *InsertRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use InsertRequest.ProtoReflect.Descriptor instead.
 func (*InsertRequest) Descriptor() ([]byte, []int) {
-	return file_bookshop_proto_rawDescGZIP(), []int{3}
+	return file_bookshop_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *InsertRequest) GetKey() string {
@@ -231,7 +361,7 @@ type Status struct {
 func (x *Status) Reset() {
 	*x = Status{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_bookshop_proto_msgTypes[4]
+		mi := &file_bookshop_proto_msgTypes[7]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -244,7 +374,7 @@ func (x *Status) String() string {
 func (*Status) ProtoMessage() {}
 
 func (x *Status) ProtoReflect() protoreflect.Message {
-	mi := &file_bookshop_proto_msgTypes[4]
+	mi := &file_bookshop_proto_msgTypes[7]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -257,7 +387,7 @@ func (x *Status) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Status.ProtoReflect.Descriptor instead.
 func (*Status) Descriptor() ([]byte, []int) {
-	return file_bookshop_proto_rawDescGZIP(), []int{4}
+	return file_bookshop_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *Status) GetResult() string {
@@ -267,33 +397,116 @@ func (x *Status) GetResult() string {
 	return ""
 }
 
+type NeighborUpdate struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Ports       string `protobuf:"bytes,1,opt,name=Ports,proto3" json:"Ports,omitempty"`
+	Id          int32  `protobuf:"varint,2,opt,name=Id,proto3" json:"Id,omitempty"`
+	IsSuccessor bool   `protobuf:"varint,3,opt,name=IsSuccessor,proto3" json:"IsSuccessor,omitempty"`
+}
+
+func (x *NeighborUpdate) Reset() {
+	*x = NeighborUpdate{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_bookshop_proto_msgTypes[8]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *NeighborUpdate) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*NeighborUpdate) ProtoMessage() {}
+
+func (x *NeighborUpdate) ProtoReflect() protoreflect.Message {
+	mi := &file_bookshop_proto_msgTypes[8]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use NeighborUpdate.ProtoReflect.Descriptor instead.
+func (*NeighborUpdate) Descriptor() ([]byte, []int) {
+	return file_bookshop_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *NeighborUpdate) GetPorts() string {
+	if x != nil {
+		return x.Ports
+	}
+	return ""
+}
+
+func (x *NeighborUpdate) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *NeighborUpdate) GetIsSuccessor() bool {
+	if x != nil {
+		return x.IsSuccessor
+	}
+	return false
+}
+
 var File_bookshop_proto protoreflect.FileDescriptor
 
 var file_bookshop_proto_rawDesc = []byte{
 	0x0a, 0x0e, 0x62, 0x6f, 0x6f, 0x6b, 0x73, 0x68, 0x6f, 0x70, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f,
-	0x22, 0x1e, 0x0a, 0x0a, 0x55, 0x72, 0x6c, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x10,
-	0x0a, 0x03, 0x4b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x4b, 0x65, 0x79,
-	0x22, 0x1f, 0x0a, 0x0b, 0x55, 0x72, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12,
-	0x10, 0x0a, 0x03, 0x55, 0x72, 0x6c, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x55, 0x72,
-	0x6c, 0x22, 0x25, 0x0a, 0x0d, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
-	0x73, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28,
-	0x09, 0x52, 0x05, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x22, 0x37, 0x0a, 0x0d, 0x49, 0x6e, 0x73, 0x65,
-	0x72, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x10, 0x0a, 0x03, 0x4b, 0x65, 0x79,
-	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x4b, 0x65, 0x79, 0x12, 0x14, 0x0a, 0x05, 0x56,
-	0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x56, 0x61, 0x6c, 0x75,
-	0x65, 0x22, 0x20, 0x0a, 0x06, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x16, 0x0a, 0x06, 0x52,
-	0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x52, 0x65, 0x73,
-	0x75, 0x6c, 0x74, 0x32, 0x87, 0x01, 0x0a, 0x09, 0x48, 0x61, 0x73, 0x68, 0x54, 0x61, 0x62, 0x6c,
-	0x65, 0x12, 0x25, 0x0a, 0x06, 0x47, 0x65, 0x74, 0x55, 0x52, 0x4c, 0x12, 0x0b, 0x2e, 0x55, 0x72,
-	0x6c, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x0c, 0x2e, 0x55, 0x72, 0x6c, 0x52, 0x65,
-	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x29, 0x0a, 0x08, 0x47, 0x65, 0x74, 0x56,
-	0x61, 0x6c, 0x75, 0x65, 0x12, 0x0b, 0x2e, 0x55, 0x72, 0x6c, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
-	0x74, 0x1a, 0x0e, 0x2e, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
-	0x65, 0x22, 0x00, 0x12, 0x28, 0x0a, 0x0b, 0x49, 0x6e, 0x73, 0x65, 0x72, 0x74, 0x56, 0x61, 0x6c,
-	0x75, 0x65, 0x12, 0x0e, 0x2e, 0x49, 0x6e, 0x73, 0x65, 0x72, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65,
-	0x73, 0x74, 0x1a, 0x07, 0x2e, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x22, 0x00, 0x42, 0x0e, 0x5a,
-	0x0c, 0x70, 0x62, 0x2f, 0x69, 0x6e, 0x76, 0x65, 0x6e, 0x74, 0x6f, 0x72, 0x79, 0x62, 0x06, 0x70,
-	0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x22, 0x0e, 0x0a, 0x0c, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x22, 0x0f, 0x0a, 0x0d, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x22, 0x1e, 0x0a, 0x0a, 0x55, 0x72, 0x6c, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12,
+	0x10, 0x0a, 0x03, 0x4b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x4b, 0x65,
+	0x79, 0x22, 0x30, 0x0a, 0x0c, 0x4e, 0x6f, 0x64, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x12, 0x10, 0x0a, 0x03, 0x55, 0x72, 0x6c, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03,
+	0x55, 0x72, 0x6c, 0x12, 0x0e, 0x0a, 0x02, 0x49, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52,
+	0x02, 0x49, 0x64, 0x22, 0x1f, 0x0a, 0x0b, 0x55, 0x72, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x55, 0x72, 0x6c, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x03, 0x55, 0x72, 0x6c, 0x22, 0x25, 0x0a, 0x0d, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x22, 0x37, 0x0a, 0x0d, 0x49,
+	0x6e, 0x73, 0x65, 0x72, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x10, 0x0a, 0x03,
+	0x4b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x4b, 0x65, 0x79, 0x12, 0x14,
+	0x0a, 0x05, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x56,
+	0x61, 0x6c, 0x75, 0x65, 0x22, 0x20, 0x0a, 0x06, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x16,
+	0x0a, 0x06, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06,
+	0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0x58, 0x0a, 0x0e, 0x4e, 0x65, 0x69, 0x67, 0x68, 0x62,
+	0x6f, 0x72, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x50, 0x6f, 0x72, 0x74,
+	0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x50, 0x6f, 0x72, 0x74, 0x73, 0x12, 0x0e,
+	0x0a, 0x02, 0x49, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x02, 0x49, 0x64, 0x12, 0x20,
+	0x0a, 0x0b, 0x49, 0x73, 0x53, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x6f, 0x72, 0x18, 0x03, 0x20,
+	0x01, 0x28, 0x08, 0x52, 0x0b, 0x49, 0x73, 0x53, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x6f, 0x72,
+	0x32, 0xa5, 0x02, 0x0a, 0x09, 0x48, 0x61, 0x73, 0x68, 0x54, 0x61, 0x62, 0x6c, 0x65, 0x12, 0x25,
+	0x0a, 0x06, 0x47, 0x65, 0x74, 0x55, 0x52, 0x4c, 0x12, 0x0b, 0x2e, 0x55, 0x72, 0x6c, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x0c, 0x2e, 0x55, 0x72, 0x6c, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x29, 0x0a, 0x08, 0x47, 0x65, 0x74, 0x56, 0x61, 0x6c, 0x75,
+	0x65, 0x12, 0x0b, 0x2e, 0x55, 0x72, 0x6c, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x0e,
+	0x2e, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00,
+	0x12, 0x28, 0x0a, 0x0b, 0x49, 0x6e, 0x73, 0x65, 0x72, 0x74, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x12,
+	0x0e, 0x2e, 0x49, 0x6e, 0x73, 0x65, 0x72, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a,
+	0x07, 0x2e, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x22, 0x00, 0x12, 0x30, 0x0a, 0x0e, 0x47, 0x65,
+	0x74, 0x50, 0x72, 0x65, 0x64, 0x65, 0x63, 0x65, 0x73, 0x73, 0x6f, 0x72, 0x12, 0x0d, 0x2e, 0x45,
+	0x6d, 0x70, 0x74, 0x79, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x0d, 0x2e, 0x4e, 0x6f,
+	0x64, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x33, 0x0a, 0x0e,
+	0x43, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x4e, 0x65, 0x69, 0x67, 0x68, 0x62, 0x6f, 0x72, 0x12, 0x0f,
+	0x2e, 0x4e, 0x65, 0x69, 0x67, 0x68, 0x62, 0x6f, 0x72, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x1a,
+	0x0e, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22,
+	0x00, 0x12, 0x35, 0x0a, 0x10, 0x52, 0x65, 0x64, 0x69, 0x73, 0x74, 0x72, 0x69, 0x62, 0x75, 0x74,
+	0x65, 0x4b, 0x65, 0x79, 0x73, 0x12, 0x0f, 0x2e, 0x4e, 0x65, 0x69, 0x67, 0x68, 0x62, 0x6f, 0x72,
+	0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x1a, 0x0e, 0x2e, 0x45, 0x6d, 0x70, 0x74, 0x79, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x42, 0x0e, 0x5a, 0x0c, 0x70, 0x62, 0x2f, 0x69,
+	0x6e, 0x76, 0x65, 0x6e, 0x74, 0x6f, 0x72, 0x79, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -308,23 +521,33 @@ func file_bookshop_proto_rawDescGZIP() []byte {
 	return file_bookshop_proto_rawDescData
 }
 
-var file_bookshop_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_bookshop_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
 var file_bookshop_proto_goTypes = []interface{}{
-	(*UrlRequest)(nil),    // 0: UrlRequest
-	(*UrlResponse)(nil),   // 1: UrlResponse
-	(*ValueResponse)(nil), // 2: ValueResponse
-	(*InsertRequest)(nil), // 3: InsertRequest
-	(*Status)(nil),        // 4: Status
+	(*EmptyRequest)(nil),   // 0: EmptyRequest
+	(*EmptyResponse)(nil),  // 1: EmptyResponse
+	(*UrlRequest)(nil),     // 2: UrlRequest
+	(*NodeResponse)(nil),   // 3: NodeResponse
+	(*UrlResponse)(nil),    // 4: UrlResponse
+	(*ValueResponse)(nil),  // 5: ValueResponse
+	(*InsertRequest)(nil),  // 6: InsertRequest
+	(*Status)(nil),         // 7: Status
+	(*NeighborUpdate)(nil), // 8: NeighborUpdate
 }
 var file_bookshop_proto_depIdxs = []int32{
-	0, // 0: HashTable.GetURL:input_type -> UrlRequest
-	0, // 1: HashTable.GetValue:input_type -> UrlRequest
-	3, // 2: HashTable.InsertValue:input_type -> InsertRequest
-	1, // 3: HashTable.GetURL:output_type -> UrlResponse
-	2, // 4: HashTable.GetValue:output_type -> ValueResponse
-	4, // 5: HashTable.InsertValue:output_type -> Status
-	3, // [3:6] is the sub-list for method output_type
-	0, // [0:3] is the sub-list for method input_type
+	2, // 0: HashTable.GetURL:input_type -> UrlRequest
+	2, // 1: HashTable.GetValue:input_type -> UrlRequest
+	6, // 2: HashTable.InsertValue:input_type -> InsertRequest
+	0, // 3: HashTable.GetPredecessor:input_type -> EmptyRequest
+	8, // 4: HashTable.ChangeNeighbor:input_type -> NeighborUpdate
+	8, // 5: HashTable.RedistributeKeys:input_type -> NeighborUpdate
+	4, // 6: HashTable.GetURL:output_type -> UrlResponse
+	5, // 7: HashTable.GetValue:output_type -> ValueResponse
+	7, // 8: HashTable.InsertValue:output_type -> Status
+	3, // 9: HashTable.GetPredecessor:output_type -> NodeResponse
+	1, // 10: HashTable.ChangeNeighbor:output_type -> EmptyResponse
+	1, // 11: HashTable.RedistributeKeys:output_type -> EmptyResponse
+	6, // [6:12] is the sub-list for method output_type
+	0, // [0:6] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -337,7 +560,7 @@ func file_bookshop_proto_init() {
 	}
 	if !protoimpl.UnsafeEnabled {
 		file_bookshop_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UrlRequest); i {
+			switch v := v.(*EmptyRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -349,7 +572,7 @@ func file_bookshop_proto_init() {
 			}
 		}
 		file_bookshop_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UrlResponse); i {
+			switch v := v.(*EmptyResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -361,7 +584,7 @@ func file_bookshop_proto_init() {
 			}
 		}
 		file_bookshop_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ValueResponse); i {
+			switch v := v.(*UrlRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -373,7 +596,7 @@ func file_bookshop_proto_init() {
 			}
 		}
 		file_bookshop_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*InsertRequest); i {
+			switch v := v.(*NodeResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -385,7 +608,55 @@ func file_bookshop_proto_init() {
 			}
 		}
 		file_bookshop_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*UrlResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_bookshop_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ValueResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_bookshop_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*InsertRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_bookshop_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*Status); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_bookshop_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*NeighborUpdate); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -403,7 +674,7 @@ func file_bookshop_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_bookshop_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   5,
+			NumMessages:   9,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

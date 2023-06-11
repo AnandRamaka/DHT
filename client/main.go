@@ -1,26 +1,26 @@
 package main
 
-
 import (
-	pb "dht/client/pb/inventory"
 	"context"
+	pb "dht/client/pb/inventory"
 	"fmt"
+	"io/ioutil"
 	"log"
+	"strings"
+
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
-	"io/ioutil"
-	"strings"
 )
 
 // var client_global := pb.NewHashTableClient(conn)
 
-func insertRequest(cl pb.HashTableClient, key string, value string ) {
+func insertRequest(cl pb.HashTableClient, key string, value string) {
 	request := &pb.InsertRequest{
-		Key: key, 
+		Key:   key,
 		Value: value,
 	}
-	
-	response, err := cl.InsertValue(context.Background(), request )
+
+	response, err := cl.InsertValue(context.Background(), request)
 
 	if err != nil {
 		log.Fatalf("failed to insert: %v", err)
@@ -30,12 +30,12 @@ func insertRequest(cl pb.HashTableClient, key string, value string ) {
 
 }
 
-func getRequest(cl pb.HashTableClient,  key string) {
+func getRequest(cl pb.HashTableClient, key string) {
 	request := &pb.UrlRequest{
-		Key: key, 
+		Key: key,
 	}
 
-	response, err := cl.GetValue(context.Background(), request )
+	response, err := cl.GetValue(context.Background(), request)
 
 	if err != nil {
 		log.Fatalf("failed to request: %v", err)
@@ -49,7 +49,7 @@ func getRequest(cl pb.HashTableClient,  key string) {
 func main() {
 	ports_file := "../ports.txt"
 	content, err := ioutil.ReadFile(ports_file)
-	
+
 	if err != nil {
 		fmt.Println("Error reading file:", err)
 		return
@@ -69,11 +69,6 @@ func main() {
 
 	client := pb.NewHashTableClient(conn)
 
-	log.Println("Context Background:", context.Background())	
-	
-	// insertRequest(client, "2234567890", "test" )
-	// getRequest(client, "2234567890") 
-	getRequest(client, "8")
+	insertRequest(client, "3054", "10")
+	getRequest(client, "3054")
 }
-
-
