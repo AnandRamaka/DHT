@@ -25,7 +25,8 @@ service HashTable {
   rpc GetValue(UrlRequest) returns (ValueResponse) {}
   rpc InsertValue(InsertRequest) returns (Status) {}
   rpc GetPredecessor(EmptyRequest) returns (NodeResponse) {}
-  rpc ChangeNeighbor(NeighborUpdate) returns (EmptyResponse) {}
+  rpc GetNodeData(EmptyRequest) returns (NodeResponse) {}
+  rpc ChangeNeighbor(NeighborUpdate) returns (NodeResponse) {}
   rpc RedistributeKeys(NeighborUpdate) returns (EmptyResponse) {}
 }
 // Get 
@@ -45,6 +46,7 @@ message NodeResponse {
 // Get URL
 message UrlResponse {
   string Url = 1;
+  int32 Id = 2;
 }
 
 // 

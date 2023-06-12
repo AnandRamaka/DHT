@@ -23,6 +23,7 @@ const (
 	HashTable_GetValue_FullMethodName         = "/HashTable/GetValue"
 	HashTable_InsertValue_FullMethodName      = "/HashTable/InsertValue"
 	HashTable_GetPredecessor_FullMethodName   = "/HashTable/GetPredecessor"
+	HashTable_GetNodeData_FullMethodName      = "/HashTable/GetNodeData"
 	HashTable_ChangeNeighbor_FullMethodName   = "/HashTable/ChangeNeighbor"
 	HashTable_RedistributeKeys_FullMethodName = "/HashTable/RedistributeKeys"
 )
@@ -35,7 +36,8 @@ type HashTableClient interface {
 	GetValue(ctx context.Context, in *UrlRequest, opts ...grpc.CallOption) (*ValueResponse, error)
 	InsertValue(ctx context.Context, in *InsertRequest, opts ...grpc.CallOption) (*Status, error)
 	GetPredecessor(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*NodeResponse, error)
-	ChangeNeighbor(ctx context.Context, in *NeighborUpdate, opts ...grpc.CallOption) (*EmptyResponse, error)
+	GetNodeData(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*NodeResponse, error)
+	ChangeNeighbor(ctx context.Context, in *NeighborUpdate, opts ...grpc.CallOption) (*NodeResponse, error)
 	RedistributeKeys(ctx context.Context, in *NeighborUpdate, opts ...grpc.CallOption) (*EmptyResponse, error)
 }
 
@@ -83,8 +85,17 @@ func (c *hashTableClient) GetPredecessor(ctx context.Context, in *EmptyRequest, 
 	return out, nil
 }
 
-func (c *hashTableClient) ChangeNeighbor(ctx context.Context, in *NeighborUpdate, opts ...grpc.CallOption) (*EmptyResponse, error) {
-	out := new(EmptyResponse)
+func (c *hashTableClient) GetNodeData(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*NodeResponse, error) {
+	out := new(NodeResponse)
+	err := c.cc.Invoke(ctx, HashTable_GetNodeData_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *hashTableClient) ChangeNeighbor(ctx context.Context, in *NeighborUpdate, opts ...grpc.CallOption) (*NodeResponse, error) {
+	out := new(NodeResponse)
 	err := c.cc.Invoke(ctx, HashTable_ChangeNeighbor_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -109,7 +120,8 @@ type HashTableServer interface {
 	GetValue(context.Context, *UrlRequest) (*ValueResponse, error)
 	InsertValue(context.Context, *InsertRequest) (*Status, error)
 	GetPredecessor(context.Context, *EmptyRequest) (*NodeResponse, error)
-	ChangeNeighbor(context.Context, *NeighborUpdate) (*EmptyResponse, error)
+	GetNodeData(context.Context, *EmptyRequest) (*NodeResponse, error)
+	ChangeNeighbor(context.Context, *NeighborUpdate) (*NodeResponse, error)
 	RedistributeKeys(context.Context, *NeighborUpdate) (*EmptyResponse, error)
 	mustEmbedUnimplementedHashTableServer()
 }
@@ -130,7 +142,10 @@ func (UnimplementedHashTableServer) InsertValue(context.Context, *InsertRequest)
 func (UnimplementedHashTableServer) GetPredecessor(context.Context, *EmptyRequest) (*NodeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPredecessor not implemented")
 }
-func (UnimplementedHashTableServer) ChangeNeighbor(context.Context, *NeighborUpdate) (*EmptyResponse, error) {
+func (UnimplementedHashTableServer) GetNodeData(context.Context, *EmptyRequest) (*NodeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetNodeData not implemented")
+}
+func (UnimplementedHashTableServer) ChangeNeighbor(context.Context, *NeighborUpdate) (*NodeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ChangeNeighbor not implemented")
 }
 func (UnimplementedHashTableServer) RedistributeKeys(context.Context, *NeighborUpdate) (*EmptyResponse, error) {
@@ -221,6 +236,24 @@ func _HashTable_GetPredecessor_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _HashTable_GetNodeData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EmptyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HashTableServer).GetNodeData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HashTable_GetNodeData_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HashTableServer).GetNodeData(ctx, req.(*EmptyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _HashTable_ChangeNeighbor_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(NeighborUpdate)
 	if err := dec(in); err != nil {
@@ -279,6 +312,10 @@ var HashTable_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetPredecessor",
 			Handler:    _HashTable_GetPredecessor_Handler,
+		},
+		{
+			MethodName: "GetNodeData",
+			Handler:    _HashTable_GetNodeData_Handler,
 		},
 		{
 			MethodName: "ChangeNeighbor",

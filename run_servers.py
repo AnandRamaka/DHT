@@ -10,6 +10,7 @@ programs = []
 outfiles = []
 errfiles = []
 NUMSERVERS = int(sys.argv[1])
+
 MODCONS = 10000
 starting_port = 8081
 ports = []
@@ -25,6 +26,38 @@ def open_files():
         outfiles.append(open(f"out/out{port_keys[i][1]}.txt", "w"))
         errfiles.append(open(f"err/err{port_keys[i][1]}.txt", "w"))
 
+def insertNode():
+
+    print("Currently inserted a new sever...\n\n")
+    global addedServers
+    # cmd args:  nodeId nodeUrl sponsorNodeURL
+
+    
+    addedServers += 1
+
+    nodeId = random.randint(1,10000)
+    port = starting_port + NUMSERVERS + addedServers - 1
+
+    random.seed(42)
+    sponsorNodeIndex = random.randint(0,len(port_keys) - 1)
+    sponsorNodeUrl = port_keys[sponsorNodeIndex][1]
+    port_keys.append((nodeId, port))
+    
+    print("New data:")
+    print("NodeId:", nodeId, ", SponsorNodeIndex:", sponsorNodeIndex, ", New Url:", port, ", sponsorNodeUrl:", sponsorNodeUrl)
+    outfiles.append(open(f"out/out{port}.txt", "w"))
+    errfiles.append(open(f"err/err{port}.txt", "w"))
+    with open('pids.txt', 'a') as pid_file, \
+     open('ports.txt', 'w') as port_file, \
+     open('serverIds.txt', 'w') as sid_file:
+        cmd_args = f"{nodeId} {port} {sponsorNodeUrl}"
+        print("server args",  cmd_args)
+        sub = subprocess.Popen(f"go run server/main.go {cmd_args}", shell=True, stdout=outfiles[-1], stderr=errfiles[-1])
+        pid_file.write(str(sub.pid) + '\n')
+        port_file.write(str(port) + '\n')
+        sid_file.write(str(nodeId) + '\n')
+        programs.append(sub)
+    
 
 clean_folder("out")
 clean_folder("err")
@@ -53,12 +86,17 @@ for i in range(len(programs)):
     print(f"started server --- sid: {port_keys[i][0]} port: {port_keys[i][1]} pid: {programs[i].pid}")
 
 print()
+
+addedServers = 0
+
     
 while True:
     print(">>", end=' ')
     cmd = input()
     if cmd == "kill":
         break
+    if cmd == "insert":
+        insertNode()
 
 
 system = platform.system()
