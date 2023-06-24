@@ -164,6 +164,54 @@ func makeConnection(connectionUrl string) (*grpc.ClientConn, pb.HashTableClient)
 	return conn, succ_server
 }
 
+func (s *server) RemoveNode(ctx context.Context, removeID int32) (*pb.UrlResponse, error) {
+	if removeID != id {
+		_, succ_server := makeConnection(ports[2])
+		return succ_server.RemoveNode(ctx, removeID)
+
+	}
+	//transfer keys to successor
+	//get successor
+	// conn, err := grpc.Dial("localhost:"+ports[2], grpc.WithTransportCredentials(insecure.NewCredentials()))
+	// if err != nil {
+	// 	fmt.Println("failed to connect: %v", err)
+	// 	return
+	// }
+	// defer conn.Close()
+	_, succ_server := makeConnection(ports[2])
+	//Assign values in table to successor
+	for k, v := range HM {
+		toAdd := &pb.InsertRequest{Key: k, Value: v}
+		succ_server.InsertValue(ctx, toAdd)
+	}
+	request := &pb.NeighborUpdate{
+		Ports:       ports[0],
+		Id:          serverIds[0],
+		IsSuccessor: false,
+	}
+	succ_server.ChangeNeighbor(ctx, request)
+	//set Predecessor's successor to current successor
+	//get pred
+	// conn, err = grpc.Dial("localhost:"+ports[0], grpc.WithTransportCredentials(insecure.NewCredentials()))
+	// if err != nil {
+	// 	fmt.Println("failed to connect: %v", err)
+	// 	return
+	// }
+	// defer conn.Close()
+	//pred_server := pb.NewHashTableClient(conn)
+	_, pred_server := makeConnection(ports[0])
+	request2 := &pb.NeighborUpdate{
+		Ports:       ports[2],
+		Id:          serverIds[2],
+		IsSuccessor: true,
+	}
+
+	pred_server.ChangeNeighbor(ctx, request2)
+	return &pb.UrlResponse{ //dummy return value
+		Url: "nonsense",
+	}, nil
+
+}
 func insertNode(nodeId int, nodeUrl string, sponsorNodeURL string) {
 	// 1, Get the node before from the sponsor node
 	// Modify successor of node before

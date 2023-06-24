@@ -57,7 +57,13 @@ def insertNode():
         port_file.write(str(port) + '\n')
         sid_file.write(str(nodeId) + '\n')
         programs.append(sub)
+
+def removeNode():
+    print("Enter ID of node you wish to delete:\n")
+    cmd=input()
+    removeID=int(cmd)
     
+
 
 clean_folder("out")
 clean_folder("err")
