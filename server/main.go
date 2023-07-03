@@ -164,12 +164,8 @@ func makeConnection(connectionUrl string) (*grpc.ClientConn, pb.HashTableClient)
 	return conn, succ_server
 }
 
-func (s *server) RemoveNode(ctx context.Context, removeID int32) (*pb.UrlResponse, error) {
-	if removeID != id {
-		_, succ_server := makeConnection(ports[2])
-		return succ_server.RemoveNode(ctx, removeID)
+func (s *server) RemoveSelf(ctx context.Context, in *pb.EmptyRequest) (*pb.EmptyResponse, error) {
 
-	}
 	//transfer keys to successor
 	//get successor
 	// conn, err := grpc.Dial("localhost:"+ports[2], grpc.WithTransportCredentials(insecure.NewCredentials()))
@@ -207,9 +203,23 @@ func (s *server) RemoveNode(ctx context.Context, removeID int32) (*pb.UrlRespons
 	}
 
 	pred_server.ChangeNeighbor(ctx, request2)
-	return &pb.UrlResponse{ //dummy return value
-		Url: "nonsense",
-	}, nil
+	return &pb.EmptyResponse{}, nil
+
+}
+func RemoveNode(ctx context.Context, removeID int32) {
+	sponsorNodeURL := ports[1]
+	conn, sponserServer := makeConnection(sponsorNodeURL)
+
+	request := &pb.UrlRequest{
+		Key: strconv.Itoa(int(removeID)),
+	}
+
+	result, _ := sponserServer.GetURL(context.Background(), request)
+	conn.Close()
+	removeURL := result.Url
+	conn2, remove_server := makeConnection(removeURL)
+	remove_server.RemoveSelf(ctx, &pb.EmptyRequest{})
+	conn2.Close()
 
 }
 func insertNode(nodeId int, nodeUrl string, sponsorNodeURL string) {

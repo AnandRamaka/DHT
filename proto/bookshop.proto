@@ -28,6 +28,7 @@ service HashTable {
   rpc GetNodeData(EmptyRequest) returns (NodeResponse) {}
   rpc ChangeNeighbor(NeighborUpdate) returns (NodeResponse) {}
   rpc RedistributeKeys(NeighborUpdate) returns (EmptyResponse) {}
+  rpc RemoveSelf(EmptyRequest) returns (EmptyResponse) {}
 }
 // Get 
 
@@ -68,4 +69,8 @@ message NeighborUpdate {
   string Ports = 1;
   int32 Id = 2;
   bool IsSuccessor = 3;
+}
+
+message RemoveRequest {
+  int32 removeID=1;
 }
