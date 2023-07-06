@@ -23,9 +23,12 @@ const (
 	HashTable_GetValue_FullMethodName         = "/HashTable/GetValue"
 	HashTable_InsertValue_FullMethodName      = "/HashTable/InsertValue"
 	HashTable_GetPredecessor_FullMethodName   = "/HashTable/GetPredecessor"
+	HashTable_GetSuccessor_FullMethodName     = "/HashTable/GetSuccessor"
 	HashTable_GetNodeData_FullMethodName      = "/HashTable/GetNodeData"
 	HashTable_ChangeNeighbor_FullMethodName   = "/HashTable/ChangeNeighbor"
 	HashTable_RedistributeKeys_FullMethodName = "/HashTable/RedistributeKeys"
+	HashTable_GetClosestFinger_FullMethodName = "/HashTable/GetClosestFinger"
+	HashTable_UpdateRest_FullMethodName       = "/HashTable/UpdateRest"
 )
 
 // HashTableClient is the client API for HashTable service.
@@ -36,9 +39,12 @@ type HashTableClient interface {
 	GetValue(ctx context.Context, in *UrlRequest, opts ...grpc.CallOption) (*ValueResponse, error)
 	InsertValue(ctx context.Context, in *InsertRequest, opts ...grpc.CallOption) (*Status, error)
 	GetPredecessor(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*NodeResponse, error)
+	GetSuccessor(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*NodeResponse, error)
 	GetNodeData(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*NodeResponse, error)
 	ChangeNeighbor(ctx context.Context, in *NeighborUpdate, opts ...grpc.CallOption) (*NodeResponse, error)
 	RedistributeKeys(ctx context.Context, in *NeighborUpdate, opts ...grpc.CallOption) (*EmptyResponse, error)
+	GetClosestFinger(ctx context.Context, in *UrlRequest, opts ...grpc.CallOption) (*NodeResponse, error)
+	UpdateRest(ctx context.Context, in *FingerUpdate, opts ...grpc.CallOption) (*EmptyResponse, error)
 }
 
 type hashTableClient struct {
@@ -85,6 +91,15 @@ func (c *hashTableClient) GetPredecessor(ctx context.Context, in *EmptyRequest, 
 	return out, nil
 }
 
+func (c *hashTableClient) GetSuccessor(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*NodeResponse, error) {
+	out := new(NodeResponse)
+	err := c.cc.Invoke(ctx, HashTable_GetSuccessor_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *hashTableClient) GetNodeData(ctx context.Context, in *EmptyRequest, opts ...grpc.CallOption) (*NodeResponse, error) {
 	out := new(NodeResponse)
 	err := c.cc.Invoke(ctx, HashTable_GetNodeData_FullMethodName, in, out, opts...)
@@ -112,6 +127,24 @@ func (c *hashTableClient) RedistributeKeys(ctx context.Context, in *NeighborUpda
 	return out, nil
 }
 
+func (c *hashTableClient) GetClosestFinger(ctx context.Context, in *UrlRequest, opts ...grpc.CallOption) (*NodeResponse, error) {
+	out := new(NodeResponse)
+	err := c.cc.Invoke(ctx, HashTable_GetClosestFinger_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *hashTableClient) UpdateRest(ctx context.Context, in *FingerUpdate, opts ...grpc.CallOption) (*EmptyResponse, error) {
+	out := new(EmptyResponse)
+	err := c.cc.Invoke(ctx, HashTable_UpdateRest_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // HashTableServer is the server API for HashTable service.
 // All implementations must embed UnimplementedHashTableServer
 // for forward compatibility
@@ -120,9 +153,12 @@ type HashTableServer interface {
 	GetValue(context.Context, *UrlRequest) (*ValueResponse, error)
 	InsertValue(context.Context, *InsertRequest) (*Status, error)
 	GetPredecessor(context.Context, *EmptyRequest) (*NodeResponse, error)
+	GetSuccessor(context.Context, *EmptyRequest) (*NodeResponse, error)
 	GetNodeData(context.Context, *EmptyRequest) (*NodeResponse, error)
 	ChangeNeighbor(context.Context, *NeighborUpdate) (*NodeResponse, error)
 	RedistributeKeys(context.Context, *NeighborUpdate) (*EmptyResponse, error)
+	GetClosestFinger(context.Context, *UrlRequest) (*NodeResponse, error)
+	UpdateRest(context.Context, *FingerUpdate) (*EmptyResponse, error)
 	mustEmbedUnimplementedHashTableServer()
 }
 
@@ -142,6 +178,9 @@ func (UnimplementedHashTableServer) InsertValue(context.Context, *InsertRequest)
 func (UnimplementedHashTableServer) GetPredecessor(context.Context, *EmptyRequest) (*NodeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPredecessor not implemented")
 }
+func (UnimplementedHashTableServer) GetSuccessor(context.Context, *EmptyRequest) (*NodeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSuccessor not implemented")
+}
 func (UnimplementedHashTableServer) GetNodeData(context.Context, *EmptyRequest) (*NodeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetNodeData not implemented")
 }
@@ -150,6 +189,12 @@ func (UnimplementedHashTableServer) ChangeNeighbor(context.Context, *NeighborUpd
 }
 func (UnimplementedHashTableServer) RedistributeKeys(context.Context, *NeighborUpdate) (*EmptyResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RedistributeKeys not implemented")
+}
+func (UnimplementedHashTableServer) GetClosestFinger(context.Context, *UrlRequest) (*NodeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetClosestFinger not implemented")
+}
+func (UnimplementedHashTableServer) UpdateRest(context.Context, *FingerUpdate) (*EmptyResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateRest not implemented")
 }
 func (UnimplementedHashTableServer) mustEmbedUnimplementedHashTableServer() {}
 
@@ -236,6 +281,24 @@ func _HashTable_GetPredecessor_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _HashTable_GetSuccessor_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EmptyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HashTableServer).GetSuccessor(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HashTable_GetSuccessor_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HashTableServer).GetSuccessor(ctx, req.(*EmptyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _HashTable_GetNodeData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(EmptyRequest)
 	if err := dec(in); err != nil {
@@ -290,6 +353,42 @@ func _HashTable_RedistributeKeys_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _HashTable_GetClosestFinger_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UrlRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HashTableServer).GetClosestFinger(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HashTable_GetClosestFinger_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HashTableServer).GetClosestFinger(ctx, req.(*UrlRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _HashTable_UpdateRest_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FingerUpdate)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HashTableServer).UpdateRest(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HashTable_UpdateRest_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HashTableServer).UpdateRest(ctx, req.(*FingerUpdate))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // HashTable_ServiceDesc is the grpc.ServiceDesc for HashTable service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -314,6 +413,10 @@ var HashTable_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _HashTable_GetPredecessor_Handler,
 		},
 		{
+			MethodName: "GetSuccessor",
+			Handler:    _HashTable_GetSuccessor_Handler,
+		},
+		{
 			MethodName: "GetNodeData",
 			Handler:    _HashTable_GetNodeData_Handler,
 		},
@@ -324,6 +427,14 @@ var HashTable_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RedistributeKeys",
 			Handler:    _HashTable_RedistributeKeys_Handler,
+		},
+		{
+			MethodName: "GetClosestFinger",
+			Handler:    _HashTable_GetClosestFinger_Handler,
+		},
+		{
+			MethodName: "UpdateRest",
+			Handler:    _HashTable_UpdateRest_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

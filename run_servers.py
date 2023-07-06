@@ -39,8 +39,13 @@ def insertNode():
     port = starting_port + NUMSERVERS + addedServers - 1
 
     random.seed(42)
-    sponsorNodeIndex = random.randint(0,len(port_keys) - 1)
-    sponsorNodeUrl = port_keys[sponsorNodeIndex][1]
+    sponsorNodeIndex = -1
+    sponsorNodeUrl = "URL"
+    sponsorNodeKey = -1
+    if len(port_keys):
+        sponsorNodeIndex = random.randint(0,len(port_keys) - 1)
+        sponsorNodeUrl = port_keys[sponsorNodeIndex][1]
+        sponsorNodeKey = port_keys[sponsorNodeIndex][0]
     port_keys.append((nodeId, port))
     
     print("New data:")
@@ -50,7 +55,7 @@ def insertNode():
     with open('pids.txt', 'a') as pid_file, \
      open('ports.txt', 'w') as port_file, \
      open('serverIds.txt', 'w') as sid_file:
-        cmd_args = f"{nodeId} {port} {sponsorNodeUrl}"
+        cmd_args = f"{nodeId} {port} {sponsorNodeKey} {sponsorNodeUrl}"
         print("server args",  cmd_args)
         sub = subprocess.Popen(f"go run server/main.go {cmd_args}", shell=True, stdout=outfiles[-1], stderr=errfiles[-1])
         pid_file.write(str(sub.pid) + '\n')
