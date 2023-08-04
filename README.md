@@ -27,6 +27,7 @@ clone repo
 _go mod init bookshop/server
 
 protoc --proto_path=proto proto/*.proto --go_out=. --go-grpc_out=._
+
 ^ This protoc command generates programs that implement functionality defined in the proto files
 
 
